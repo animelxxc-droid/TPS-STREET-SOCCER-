@@ -29,9 +29,9 @@
   }
 
   .logo {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
   }
 
   .menu button {
@@ -71,7 +71,26 @@
     display: none;
   }
 
-  /* MOBILE */
+  input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 200px;
+  }
+
+  button.action {
+    padding: 10px 15px;
+    border: none;
+    background: #74b9ff;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  button.action:hover {
+    background: #55a3ff;
+  }
+
   @media (max-width: 768px) {
     body {
       flex-direction: column;
@@ -80,37 +99,102 @@
     .sidebar {
       width: 100%;
       display: flex;
-      overflow-x: auto;
       gap: 10px;
     }
 
     .menu button {
       flex: 1;
-      margin-bottom: 0;
     }
   }
-
 </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
 <div class="sidebar">
   <div class="logo">TPS STREET SOCCER</div>
 
   <div class="menu">
-    <button onclick="showPage('home')">Ana Sayfa</button>
-    <button onclick="showPage('tiers')">TPS Tiers</button>
-    <button onclick="showPage('leagues')">Ligler</button>
-    <button onclick="showPage('account')">Hesabım</button>
+    <button onclick="show('home')">Ana Sayfa</button>
+    <button onclick="show('tiers')">TPS Tiers</button>
+    <button onclick="show('leagues')">Ligler</button>
+    <button onclick="show('account')">Hesabım</button>
   </div>
 </div>
 
-<!-- MAIN -->
 <div class="main">
 
   <!-- HOME -->
   <div id="home">
     <div class="card">
-      <h1>Ho
+      <h1>Hoş Geldin</h1>
+      <p>TPS Street Soccer Topluluğu</p>
+      <p>Kurucu: Pheno</p>
+    </div>
+  </div>
+
+  <!-- TIERS -->
+  <div id="tiers" class="hidden">
+    <div class="card">
+      <h1>TPS Tiers</h1>
+      <p><b>Player</b> ve <b>Team</b> kategorileri yakında içerik alacak.</p>
+    </div>
+  </div>
+
+  <!-- LEAGUES -->
+  <div id="leagues" class="hidden">
+    <div class="card">
+      <h1>Ligler</h1>
+      <p>Discord sunucusuna katılarak liglere dahil olabilirsin.</p>
+      <a href="https://discord.com" target="_blank">Discord'a Git</a>
+    </div>
+  </div>
+
+  <!-- ACCOUNT -->
+  <div id="account" class="hidden">
+    <div class="card">
+      <h1>Hesabım</h1>
+
+      <p>İsim oluştur:</p>
+      <input id="username" placeholder="Kullanıcı adı" />
+      <button class="action" onclick="saveName()">Kaydet</button>
+
+      <p id="saved" style="margin-top:15px;"></p>
+
+      <hr style="margin:20px 0;">
+
+      <p>Discord: Phenomenonabis</p>
+      <p>TikTok: Orginal_yr7</p>
+      <p>Ödül: 100 TL Google Play → Hareketli Profil Fotoğrafı</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function show(page) {
+  document.querySelectorAll('.main > div').forEach(d => d.classList.add('hidden'));
+  document.getElementById(page).classList.remove('hidden');
+}
+
+// basit isim sistemi (local)
+function saveName() {
+  let name = document.getElementById("username").value;
+
+  if (!name) return;
+
+  localStorage.setItem("tps_name", name);
+  document.getElementById("saved").innerText = "Kaydedildi: " + name;
+}
+
+// sayfa açılınca isim varsa göster
+window.onload = () => {
+  let name = localStorage.getItem("tps_name");
+  if (name) {
+    document.getElementById("saved").innerText = "Hoş geldin: " + name;
+  }
+}
+</script>
+
+</body>
+ </html>
